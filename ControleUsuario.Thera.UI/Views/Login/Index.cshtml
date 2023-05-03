@@ -1,0 +1,41 @@
+﻿@model ControleUsuario.Thera.UI.Models.LoginViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="center-div">
+    @*<div class="logo">
+            <img src="@Url.Content("~/Content/Images/logo.svg")" alt="Logo" />
+        </div>*@
+    <div class="col-10 m-auto">
+        <div class="col-6 m-auto logo">
+            <img src="@Url.Content("~/Content/Images/logo.svg")" alt="Logo" />
+        </div>
+        <div class="col-md-12 inputs-login">
+            <div class="d-flex flex-row">
+                <span class="user-icon"></span>
+                <input type="email" class="input-login" placeholder="Usuario" id="user" />
+            </div>
+            <div class="span-error">
+                <span id="errorusuario"></span>
+            </div>
+        </div>
+        <div class="col-md-12 mt-3">
+            <div class="d-flex flex-row">
+                <span class="password-icon"></span>
+                <input type="password" class="input-login" placeholder="Senha" id="password" />
+            </div>
+            <div class="span-error">
+                <span id="errorsenha"></span>
+            </div>
+        </div>
+        <div class="col-md-12 mt-2">
+            <button type="submit" id="loginButton" class="btn btn-login btn-lg">
+                <span id="btn-span">LOGIN</span>
+                <div class="spinner-border text-primary" id="spinner" style="display:none;" role="status">
+                    
+                </div>
+            </button>
+        </div>
+    </div>
+</div>
