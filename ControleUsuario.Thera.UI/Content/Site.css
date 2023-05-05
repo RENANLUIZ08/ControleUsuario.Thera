@@ -9,11 +9,9 @@
     display: block;
 }
 
-.btn-login,
-.btn-login:hover,
-.btn-login:active,
-.btn-login:focus-visible {
-    width: 189px !important;
+.btn-default,
+.btn-default:active,
+.btn-default:focus-visible {
     height: 63px !important;
     background: #FCCD2A 0% 0% no-repeat padding-box !important;
     border-radius: 5px !important;
@@ -23,81 +21,31 @@
     letter-spacing: 0px !important;
     color: #1E5084 !important;
     opacity: 1 !important;
-    margin-left: 120px;
 }
 
+    .btn-default:hover {
+        border: 2px solid #FCCD2A;
+        height: 63px !important;
+        border-radius: 5px !important;
+        opacity: 1 !important;
+        text-align: center !important;
+        font: normal normal bold 30px/41px Open Sans !important;
+        letter-spacing: 0px !important;
+        color: white !important;
+        opacity: 1 !important;
+        background-color: transparent !important;
+    }
 
-.logo img {
-    width: 188px;
-    height: 74px;
-    display: block;
-    margin-top: 132px;
-    margin-left: 15px;
+.spinner-color {
+    color: #1E5084;
 }
 
+    .spinner-color:hover {
+        color: white;
+    }
 /* Set padding to keep content from hitting the edges */
 .body-content {
     margin-top: 15px;
     padding-left: 15px;
     padding-right: 15px;
-}
-
-.inputs-login {
-    margin-top: 107px;
-}
-
-.input-login,
-.input-login:focus-visible {
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    border-radius: 5px;
-    border: none;
-    opacity: 1;
-    text-align: left;
-    font: normal normal normal 26px/36px Open Sans;
-    letter-spacing: 0px;
-    color: #707070;
-    padding-left: 28px;
-    width: 80% !important;
-    height: 63px !important;
-    margin-right:2px;
-}
-
-.user-icon,
-.password-icon {
-    width: 50px;
-    height: 50px;
-    font-size: 20px;
-    margin-right: 10px;
-}
-
-.user-icon {
-    display: inline-block;
-    margin-top: 8px;
-    background-size: cover;
-    background-image: url(Images/usuario.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 15px;
-}
-
-.password-icon {
-    display: inline-block;
-    margin-bottom: 10px;
-    background-size: cover;
-    background-image: url(Images/senha.svg);
-    background-repeat: no-repeat;
-    background-position: center;
-    margin-right: 15px;
-}
-
-.span-error{
-    margin-left: 65px;
-    margin-top:5px;
-    color: white;
-    font-weight: bold; 
-}
-
-.logo-dash img{
-    width: 108px;
-    height: 60px;
 }

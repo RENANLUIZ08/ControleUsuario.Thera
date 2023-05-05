@@ -4,6 +4,7 @@ using ControleUsuario.Thera.Domain.DTO;
 using ControleUsuario.Thera.Domain.Entidades;
 using ControleUsuario.Thera.Service.Resources.Requested;
 using ControleUsuario.Thera.Service.Resources.Requested.TimeSheetModels;
+using ControleUsuario.Thera.Service.Resources.Response;
 using ControleUsuario.Thera.Service.Resources.Response.TimeSheetModels;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
@@ -31,12 +32,18 @@ namespace ControleUsuario.Thera.UI.App_Start
     {
         public MyMappingProfile()
         {
-            CreateMap<RegistroDto, Registro>()
-                .ForMember(dest => dest.TotalDay, opt => opt.Ignore())
-                .ReverseMap();
+            CreateMap<Registro, RegistroDto>()
+                .ForMember(dest => dest.TotalDay, opt => opt.MapFrom(src => src.ObterTotalDia()));
+
+            CreateMap<RegistroDto, Registro>();
+
+            CreateMap<TimeSheet, Registro>()
+                .ForMember(dest => dest.Start, opt => opt.MapFrom(src => src.Start))
+                .ForMember(dest => dest.StartLunch, opt => opt.MapFrom(src => src.StartLunch))
+                .ForMember(dest => dest.EndLunch, opt => opt.MapFrom(src => src.EndLunch))
+                .ForMember(dest => dest.End, opt => opt.MapFrom(src => src.End));
 
             CreateMap<PutTimeSheet, Registro>()
-                .ForMember(dest => dest.TotalDay, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Start, opt => opt.Ignore())
                 .ReverseMap();

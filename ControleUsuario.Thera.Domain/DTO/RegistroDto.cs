@@ -14,5 +14,6 @@ namespace ControleUsuario.Thera.Domain.DTO
         public DateTime StartLunch { get; set; } = DateTime.MinValue;
         public DateTime EndLunch { get; set; } = DateTime.MinValue;
         public DateTime End { get; set; } = DateTime.MinValue;
+        public string TotalDay { get; set; } = DateTime.MinValue.ToString("HH\\:mm\\:ss");
     }
 }

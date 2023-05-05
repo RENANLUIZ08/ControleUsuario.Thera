@@ -13,7 +13,7 @@ using System.Web.Mvc;
 
 namespace ControleUsuario.Thera.UI.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : ControllerBase
     {
         private readonly ILoginService _loginService;
 
@@ -25,7 +25,9 @@ namespace ControleUsuario.Thera.UI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            if (!IsAuthenticated()) return View();
+
+            return RedirectToAction("Dashboard", "Registros");
         }
 
         [HttpPost]
@@ -47,15 +49,28 @@ namespace ControleUsuario.Thera.UI.Controllers
                     Data = new { success = false, obj = autenticacao },
                 };
             }
-            catch { }
-
-            return new JsonResult
+            catch(HttpRequestException) 
             {
-                Data = new { success = false, message = "Erro ao realizar o login, tente novamente." }
-            };
+                return new JsonResult
+                {
+                    Data = new { success = false, message = "Erro ao realizar o login, tente novamente." }
+                };
+            }
+            catch
+            {
+                return new JsonResult
+                {
+                    Data = new { success = false, message = "Usuário ou senha invalidos." }
+                };
+            }            
         }
 
         private async Task<AutenticacaoDto> Authentication(string username, string password)
         => await _loginService.GerarAutenticacao(new LoginDto(username, password));
+
+        private bool IsAuthenticated()
+        {
+            return ObterAutenticado() != null;
+        }
     }
 }

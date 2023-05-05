@@ -1,0 +1,38 @@
+﻿@model List<ControleUsuario.Thera.Domain.DTO.RegistroDto>
+@{ 
+    string ObterHorario(string horario)
+    {
+        return DateTime.MinValue.ToString("HH\\:mm\\:ss") != horario
+            ? horario
+            : "";
+    }
+}
+<!--tabela-->
+<div class="col-md-9 mx-auto bg-light">
+    <table class="table table-striped mt-2">
+        <thead class="custom-thead">
+            <tr>
+                <th style="display:none">#</th>
+                <th class="col-2">Data</th>
+                <th class="col-2">Hora Início</th>
+                <th class="col-2">Almoço Início</th>
+                <th class="col-2">Almoço Fim</th>
+                <th class="col-2">Hora Fim</th>
+                <th class="col-3">Tempo</th>
+            </tr>
+        </thead>
+        <tbody id="registros">
+            @foreach (var item in Model)
+            {
+                <tr id="@("reg_" + item.Id)">
+                    <td>@item.Start.ToString("dd/MM/yyyy")</td>
+                    <td>@ObterHorario(@item.Start.ToString("HH\\:mm\\:ss"))</td>
+                    <td>@ObterHorario(item.StartLunch.ToString("HH\\:mm\\:ss"))</td>
+                    <td>@ObterHorario(item.EndLunch.ToString("HH\\:mm\\:ss"))</td>
+                    <td>@ObterHorario(item.End.ToString("HH\\:mm\\:ss"))</td>
+                    <td>@ObterHorario(item.TotalDay == DateTime.MinValue.ToString("HH\\:mm\\:ss") ? "" : item.TotalDay)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

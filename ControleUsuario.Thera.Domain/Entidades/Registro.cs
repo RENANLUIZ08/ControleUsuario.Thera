@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Domain.Thera.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,6 @@ namespace ControleUsuario.Thera.Domain.Entidades
         public DateTime StartLunch { get; private set; }
         public DateTime EndLunch { get; private set; }
         public DateTime End { get; private set; }
-        public TimeSpan TotalDay { get; private set; } = TimeSpan.Zero;
 
         public Registro()
         { }
@@ -28,38 +28,39 @@ namespace ControleUsuario.Thera.Domain.Entidades
 
         public void FinalizarExpediente()
         {
-            if (End != DateTime.MinValue) throw new Exception("Não é possivel finalizar um dia que ja consta como encerrado.");
+            if (End != DateTime.MinValue && End.TimeOfDay != TimeSpan.Parse("00:00:00")) throw new TheraException("Não é possivel finalizar um dia que ja consta como encerrado.");
 
-            End = DateTime.Now;
-            ObterTotalDia();
+            End = ObterDataUTC();
         }
 
         public void IniciarAlmoco()
         {
-            if (Start == DateTime.MinValue) throw new Exception("Não é possivel iniciar o horário de almoço, pois o dia de trabalho não foi inicializado.");
+            if (Start == DateTime.MinValue) throw new TheraException("Não é possivel iniciar o horário de almoço, pois o dia de trabalho não foi inicializado.");
             
-            StartLunch = DateTime.Now;
+            StartLunch = ObterDataUTC();
         }
 
         public void FinalizarAlmoco()
         {
-            if (Start == DateTime.MinValue) throw new Exception("Não é possivel finalizar o horário de almoço, pois o dia de trabalho não foi inicializado.");
-            if (StartLunch == DateTime.MinValue) throw new Exception("Não é possivel finalizar o horário de almoço, pois o horario de almoço não foi inicializado.");
+            if (Start == DateTime.MinValue) throw new TheraException("Não é possivel finalizar o horário de almoço, pois o dia de trabalho não foi inicializado.");
+            if (StartLunch == DateTime.MinValue) throw new TheraException("Não é possivel finalizar o horário de almoço, pois o horario de almoço não foi inicializado.");
 
-            EndLunch = DateTime.Now;
+            EndLunch = ObterDataUTC();
         }
 
-        #region Private Methods
-        private void ObterTotalDia()
+        public string ObterTotalDia()
         {
-            if (Start == DateTime.MinValue) throw new Exception("Não é possivel computar a data de um dia sem inicializar a data de inicio do expediente");
-            if (StartLunch == DateTime.MinValue) throw new Exception("Não é possivel computar a data de um dia sem inicializar o horario de almoço.");
-            if (EndLunch == DateTime.MinValue) throw new Exception("Não é possivel computar a data de um dia sem finalizar o horario de almoço.");
-            if (End == DateTime.MinValue) throw new Exception("Não é possivel computar a data de um dia sem inicializar a data de final do expediente");
+            bool diaFinalizado = Start != DateTime.MinValue && (StartLunch != DateTime.MinValue && StartLunch.TimeOfDay != TimeSpan.Parse("00:00:00")) && (EndLunch != DateTime.MinValue && EndLunch.TimeOfDay != TimeSpan.Parse("00:00:00")) && (End != DateTime.MinValue && End.TimeOfDay != TimeSpan.Parse("00:00:00"));
+            if (diaFinalizado)
+            {
+                var horasTrabalhadas = ((End - Start) - (EndLunch - StartLunch));
+                return string.Format("{0:D2}:{1:D2}:{2:D2}", horasTrabalhadas.Hours, horasTrabalhadas.Minutes, horasTrabalhadas.Seconds);
+            }
 
-            TotalDay = (End - Start) - (EndLunch - StartLunch);
+            return "00:00:00";
         }
 
-        #endregion
+        private DateTime ObterDataUTC()
+        => DateTime.Now.AddHours(-3);
     }
 }

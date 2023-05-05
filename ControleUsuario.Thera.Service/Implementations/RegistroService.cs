@@ -28,14 +28,15 @@ namespace ControleUsuario.Thera.Service.Implementations
 
         }
 
-        public async Task CreateTimeSheet(AutenticacaoDto autenticacao)
+        public async Task<TimeSheetCreated> CreateTimeSheet(AutenticacaoDto autenticacao)
         {
             using (var request = new RequestBase(autenticacao.TokenType, autenticacao.AccessToken))
             {
                 try
                 {
                     request.SetRoute(Constants.TheraUrl, route);
-                    _ = await request.PostAsync<TimeSheetCreated>();
+                    var response = await request.PostAsync<TimeSheetCreated>();
+                    return response;
                 }
                 catch (Exception ex)
                 {
@@ -77,19 +78,30 @@ namespace ControleUsuario.Thera.Service.Implementations
                     throw ex;
                 }
 
-                return await Task.FromResult(registro.TotalDay.ToString("hh\\:mm\\:ss"));
+                return await Task.FromResult(registroDto.TotalDay);
             }
-            
+
         }
 
-        public async Task<Paginacao> GetAllTimeSheets(AutenticacaoDto autenticacao)
+        public async Task<List<RegistroDto>> GetAllTimeSheets(AutenticacaoDto autenticacao)
         {
             using (var request = new RequestBase(autenticacao.TokenType, autenticacao.AccessToken))
             {
                 try
                 {
                     request.SetRoute(Constants.TheraUrl, route);
-                    return await request.GetAsync<Paginacao>();
+                    var response = await request.GetAsync<Paginacao>();
+
+                    if ((response?.Items?.Count).GetValueOrDefault(0) > 0)
+                    {
+                        return response.Items.Select(r =>
+                        {
+                            var getRegistro = _mapper.Map<Registro>(r);
+                            return _mapper.Map<RegistroDto>(getRegistro);
+                        }).AsParallel().ToList();
+                    }
+
+                    return new List<RegistroDto>();
                 }
                 catch (Exception ex)
                 {

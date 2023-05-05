@@ -15,7 +15,11 @@ namespace ControleUsuario.Thera.UI
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/thera").Include(
-                "~/Scripts/thera.js"));
+                "~/Scripts/toast.js",
+                "~/Scripts/helpers.js",
+                "~/Scripts/login.js",
+                "~/Scripts/dashboard.js",
+                "~/Scripts/default.js"));
 
             // Use a versão em desenvolvimento do Modernizr para desenvolver e aprender com ela. Após isso, quando você estiver
             // pronto para a produção, utilize a ferramenta de build em https://modernizr.com para escolher somente os testes que precisa.
@@ -27,7 +31,9 @@ namespace ControleUsuario.Thera.UI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css",
+                      "~/Content/Login.css",
+                      "~/Content/Dashboard.css"));
         }
     }
 }

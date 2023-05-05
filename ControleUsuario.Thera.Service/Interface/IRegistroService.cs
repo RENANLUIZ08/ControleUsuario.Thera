@@ -1,5 +1,6 @@
 ﻿using ControleUsuario.Thera.Domain.DTO;
 using ControleUsuario.Thera.Service.Resources.Response;
+using ControleUsuario.Thera.Service.Resources.Response.TimeSheetModels;
 using Domain.Thera.Enum;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace ControleUsuario.Thera.Service.Interface
 {
     public interface IRegistroService
     {
-        Task CreateTimeSheet(AutenticacaoDto autenticacao);
+        Task<TimeSheetCreated> CreateTimeSheet(AutenticacaoDto autenticacao);
         Task<string> UpdateTimeSheet(AutenticacaoDto autenticacao, RegistroDto registroDto, ETimeSheet eTimeSheet);
-        Task<Paginacao> GetAllTimeSheets(AutenticacaoDto autenticacao);
+        Task<List<RegistroDto>> GetAllTimeSheets(AutenticacaoDto autenticacao);
     }
 }

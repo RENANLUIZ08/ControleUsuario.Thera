@@ -14,5 +14,6 @@ namespace ControleUsuario.Thera.Service.Resources.Response.TimeSheetModels
 
         [JsonProperty("start")]
         public DateTime Start { get; set; }
+
     }
 }

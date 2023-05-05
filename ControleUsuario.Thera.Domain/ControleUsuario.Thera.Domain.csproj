@@ -52,7 +52,9 @@
     <Compile Include="Entidades\Entity.cs" />
     <Compile Include="Entidades\Registro.cs" />
     <Compile Include="Enum\ETimeSheet.cs" />
+    <Compile Include="Enum\EHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Exceptions\TheraException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

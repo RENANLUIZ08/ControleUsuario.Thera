@@ -2,20 +2,12 @@
 
 @{
     ViewBag.Title = "Dashboard";
+    Func<ControleUsuario.Thera.Domain.DTO.RegistroDto, bool> func = (q) =>
+    ((q.StartLunch == DateTime.MinValue || q.StartLunch.TimeOfDay == TimeSpan.Parse("00:00:00")) || (q.EndLunch == DateTime.MinValue || q.EndLunch.TimeOfDay == TimeSpan.Parse("00:00:00")) || (q.End == DateTime.MinValue || q.End.TimeOfDay == TimeSpan.Parse("00:00:00")));
 }
-
-<div class="col-md-12 mt-4" style="background-color:red; height:50px">
-    <div class="d-flex flex-row">
-        <div class="col-3 ml-auto logo-dash">
-            <img src="@Url.Content("~/Content/Images/logo.svg")" alt="Logo" />
-        </div>
-        <div class="col-2 mt-2">
-            <span class="fw-bolder text-white">tesatando</span>
-        </div>
-        <div class="col-7">
-            <button class="btn btn-login btn-lg">
-                <span id="btn-span">LOGIN</span>
-            </button>
-        </div>
-    </div>
-</div>
+<!--topo-->
+@Html.Partial("_menuDashboard")
+<!--botoes-->
+@Html.Partial("_botoesAcao", (Model.Registros?.OrderByDescending(s => s.Start.Date)?.FirstOrDefault(func)?.Id).GetValueOrDefault(0))
+<!--tabela-->
+@Html.Partial("_registros", Model.Registros)
